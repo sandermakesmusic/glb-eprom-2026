@@ -82,6 +82,7 @@ pipeline.bloomEnabled = true;
 pipeline.bloomThreshold = 0.8;
 pipeline.bloomWeight = 0.25;
 pipeline.bloomKernel = 64;
+pipeline.bloomScale = .5;
 
 // Camera controls
 const panel = document.createElement("div");
@@ -405,7 +406,7 @@ canvas.addEventListener("pointerdown", stopRotation);
 
 async function loadModel() {
 const result = await ImportMeshAsync(
-"/models/scene-opt.glb",
+"/models/scene-opt-webp.glb",
 scene
 );
 
