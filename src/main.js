@@ -11,9 +11,9 @@ MeshBuilder,
 StandardMaterial
 } from "@babylonjs/core";
 
+import { CubeTexture } from "@babylonjs/core/Materials/Textures/cubeTexture";
 import { DefaultRenderingPipeline } from "@babylonjs/core/PostProcesses/RenderPipeline/Pipelines/defaultRenderingPipeline";
 import { ImportMeshAsync } from "@babylonjs/core/Loading/sceneLoader";
-import { HDRCubeTexture } from "@babylonjs/core/Materials/Textures/hdrCubeTexture";
 
 import "@babylonjs/loaders/glTF";
 
@@ -29,6 +29,7 @@ scene.imageProcessingConfiguration.exposure = 2;
 scene.imageProcessingConfiguration.contrast = 2;
 
 // HDRI
+/*
 scene.environmentTexture = new HDRCubeTexture(
 "/textures/studio.hdr",
 scene,
@@ -38,7 +39,14 @@ true,
 false,
 true
 );
+*/
 
+const environmentTexture = CubeTexture.CreateFromPrefilteredData(
+  "/textures/studio.env",
+  scene
+);
+
+scene.environmentTexture = environmentTexture;
 scene.environmentIntensity = 1;
 
 // Camera
@@ -410,10 +418,10 @@ const result = await ImportMeshAsync(
 scene
 );
 
+
 for (const texture of scene.textures) {
-texture.generateMipMaps = true;
 texture.updateSamplingMode(3);
-texture.anisotropicFilteringLevel = 16;
+texture.anisotropicFilteringLevel = 4;
 }
 
 // Overhead lights
